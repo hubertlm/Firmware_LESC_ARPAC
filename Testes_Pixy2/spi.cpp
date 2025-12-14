@@ -72,9 +72,9 @@ int recv(uint8_t *buffer, uint8_t len) {
 
 
 void get_version() {
-    uint8_t versionRequest[] = {0xae, 0xc1, 0x0e, 0x00};
+    uint8_t versionRequest[] = {0xaf, 0xc1, 0x0e, 0x00, 0x00, 0x00}; // Comando getVersion com checksum
     
-    uint8_t recvBuf[32] = {0}; 
+    uint8_t recvBuf[128] = {0}; 
 
     std::cout << "Enviando comando getVersion..." << std::endl;
 
@@ -83,8 +83,8 @@ void get_version() {
         return;
     }
 
-    sleep(1); // Espera 1s pela resposta (aumentei um pouco para teste, 1ms é o documentado)
-    int lenAttemptToReceive = 32; 
+    usleep(1000); // Espera pela resposta
+    int lenAttemptToReceive = 128; 
     int lenActuallyReceived = recv(recvBuf, lenAttemptToReceive);
 
     if (lenActuallyReceived < 0) {
