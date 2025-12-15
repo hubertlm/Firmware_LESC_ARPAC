@@ -94,7 +94,6 @@ void get_blocks() {
         uint16_t checksum = ((uint16_t)response[packet_offset + 5] << 8) | response[packet_offset + 4];
         uint8_t data_len = response[packet_offset + 3];
         
-        // Validação básica de checksum (soma dos bytes do payload)
         uint16_t sum = 0;
         for (int i = 0; i < data_len; i++) sum += response[packet_offset + 6 + i];
 
@@ -127,9 +126,7 @@ int main() {
     while (running) {
         get_blocks();
         
-        // Controle de Frame Rate (IMPORTANTE)
-        // 20ms = 20000 microsegundos = aprox 50Hz.
-        // Isso alivia a CPU do Raspberry Pi e sincroniza com a câmera.
+        // Controle de Frame Rate 
         usleep(20000); 
     }
 
